@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator grafik</title>
+  <link rel="stylesheet" type="text/css" href="baju kalkulator.css">
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <div style="text-align: center;">
+    <h2>Kalkulator grafik</h2>
+    <div>
+      <label for="equation">Enter Equation:</label>
+      <input type="text" id="equation" placeholder="Contoh., x-2">
+      <button onclick="appendSymbol('^')">^</button>
+      <button onclick="appendSymbol('*')">*</button>
+      <button onclick="appendSymbol('/')">/</button>
+      <button onclick="appendSymbol('sin')">sin</button>
+      <button onclick="appendSymbol('cos')">cos</button>
+      <button onclick="appendSymbol('tan')">tan</button>
+      <button onclick="appendSymbol('sqrt')">√</button>
+      <button onclick="appendSymbol('pi')">π</button>
+      <button onclick="appendSymbol('e')">e</button>
+      <button onclick="appendSymbol('(')">(</button>
+      <button onclick="appendSymbol(')')">)</button>
+      <button onclick="graphEquation()">Graph</button>
+    </div>
+    <div id="graph"></div>
+  </div>
+
+  <script>
+    function appendSymbol(symbol) {
+      const equationInput = document.getElementById('equation');
+      equationInput.value += symbol;
+    }
+
+    function graphEquation() {
+      const equationInput = document.getElementById('equation');
+      const equation = equationInput.value;
+
+      const xValues = [];
+      const yValues = [];
+
+      for (let x = -10; x <= 10; x += 0.1) {
+        xValues.push(x);
+        // Parse and evaluate the equation for y
+        const y = eval(equation.replace(/sin/g, 'Math.sin').replace(/cos/g, 'Math.cos').replace(/tan/g, 'Math.tan').replace(/sqrt/g, 'Math.sqrt').replace(/pi/g, 'Math.PI').replace(/e/g, 'Math.E').replace(/x/g, x));
+        yValues.push(y);
+      }
+
+      const trace = {
+        x: xValues,
+        y: yValues,
+        type: 'scatter',
+        mode: 'lines',
+        line: { color: 'blue' },
+        name: equation
+      };
+
+      const layout = {
+        title: 'Graph',
+        xaxis: {
+          title: 'x'
+        },
+        yaxis: {
+          title: 'y'
+        }
+      };
+
+      const data = [trace];
+
+      Plotly.newPlot('graph', data, layout);
+    }
+  </script>
+  <hr>
+  <div class="nasi">
+    <a href="Halaman beranda.html">
+      <img src="beranda.png">
+    </a>
+    <a href="materi.html">
+      <img src="8.png">
+    </a>
+    <a href="latihan soal.html">
+      <img src="9.png">
+    </a>
+    <a href="admin.html">
+      <img src="11.png">
+    </a>
+  </div>
+</body>
+</html>
